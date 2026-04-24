@@ -4,11 +4,11 @@
 <h1>Gestion Invités</h1>
 
 {% with messages = get_flashed_messages(with_categories=true) %}
-  {% if messages %}
-    {% for category, message in messages %}
-      <div class="alert alert-{{ category }}">{{ message }}</div>
-    {% endfor %}
-  {% endif %}
+{% if messages %}
+{% for category, message in messages %}
+<div class="alert alert-{{ category }}">{{ message }}</div>
+{% endfor %}
+{% endif %}
 {% endwith %}
 
 <div class="glass-card">
@@ -39,19 +39,42 @@
     <h2 style="font-size: 1.1rem; margin-bottom: 15px;">Actions rapides</h2>
     <div class="guest-list">
         {% for guest in guests %}
-            <div class="guest-item">
-                <div class="guest-info">
-                    <h3>{{ guest.nom }}</h3>
-                    <p>{{ guest.montant_attendu }} {{ guest.devise }}</p>
-                </div>
-                <div class="actions" style="display: flex; gap: 10px;">
-                    <a href="{{ url_for('generate_qr', code_unique=guest.code_unique) }}" target="_blank" style="font-size: 1.2rem;">🖼️</a>
-                    <form action="{{ url_for('delete_guest', guest_id=guest.id) }}" method="POST">
-                        <button type="submit" style="background:none; border:none; color:var(--error-color); cursor:pointer;">🗑️</button>
-                    </form>
-                </div>
+        <div class="guest-item">
+            <div class="guest-info">
+                <h3>{{ guest.nom }}</h3>
+                <p>{{ guest.montant_attendu }} {{ guest.devise }}</p>
             </div>
+            <div class="actions" style="display: flex; gap: 12px; align-items: center;">
+                <!-- Copier le lien -->
+                <button onclick="copyLink('{{ url_for('invitation', code_unique=guest.code_unique, _external=True) }}')"
+                    style="background:none; border:none; cursor:pointer; font-size: 1.2rem;"
+                    title="Copier le lien">🔗</button>
+
+                <!-- Partager sur WhatsApp -->
+                <a href="https://wa.me/?text=Salut {{ guest.nom }} ! Voici ton invitation pour l'anniversaire de Pakas : {{ url_for('invitation', code_unique=guest.code_unique, _external=True) }}"
+                    target="_blank" style="text-decoration: none; font-size: 1.2rem;"
+                    title="Envoyer par WhatsApp">📱</a>
+
+                <a href="{{ url_for('generate_qr', code_unique=guest.code_unique) }}" target="_blank"
+                    style="font-size: 1.2rem;" title="Voir le QR code">🖼️</a>
+
+                <form action="{{ url_for('delete_guest', guest_id=guest.id) }}" method="POST">
+                    <button type="submit"
+                        style="background:none; border:none; color:var(--error-color); cursor:pointer; font-size: 1.2rem;">🗑️</button>
+                </form>
+            </div>
+        </div>
         {% endfor %}
     </div>
 </div>
+
+<script>
+    function copyLink(url) {
+        navigator.clipboard.writeText(url).then(function () {
+            alert("Lien d'invitation copié !");
+        }, function (err) {
+            console.error('Erreur lors de la copie : ', err);
+        });
+    }
+</script>
 {% endblock %}

@@ -96,6 +96,12 @@ def generate_qr(code_unique):
     
     return send_file(img_io, mimetype='image/png')
 
+@app.route('/invitation/<code_unique>')
+def invitation(code_unique):
+    guest = Guest.query.filter_by(code_unique=code_unique).first_or_404()
+    # On génère l'URL complète pour que l'invité puisse savoir où il va
+    return render_template('invitation.html', guest=guest)
+
 @app.route('/scan')
 def scan():
     if not session.get('admin'): return redirect(url_for('login'))
@@ -125,7 +131,8 @@ def verify(code_unique):
         if nom_saisi.lower() == guest.nom.lower() and montant_saisi == guest.montant_attendu:
             guest.a_paye = True
             db.session.commit()
-            return render_template('verify.html', guest=guest, success=True)
+            flash(f"ENTRÉE VALIDÉE : Bienvenue {guest.nom} ! ✅", "success")
+            return redirect(url_for('index'))
         else:
             # Erreur !
             guest.essais_echoues += 1
