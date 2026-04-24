@@ -2,13 +2,14 @@ from flask import Flask, render_template, request, redirect, url_for, flash, sen
 from models import db, Guest
 import qrcode
 import io
+import os
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///birthday.db'
-app.config['SECRET_KEY'] = 'pakas-birthday-2026-secret'
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-key-very-secret')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-ADMIN_PASSWORD = "Pakas"
+ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'Pakas')
 
 db.init_app(app)
 
