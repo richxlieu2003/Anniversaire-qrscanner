@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Pakas Birthday QR</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="floating-nav">
+        <a href="{{ url_for('scan') }}" class="{% if request.endpoint == 'scan' %}active{% endif %}">📸 Scanner</a>
+        <a href="{{ url_for('admin') }}" class="{% if request.endpoint == 'admin' %}active{% endif %}">📋 Liste</a>
+    </div>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

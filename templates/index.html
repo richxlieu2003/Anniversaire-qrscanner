@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Pakas Birthday</h1>
+
+<div class="glass-card" style="text-align: center;">
+    <p style="margin-bottom: 15px; font-weight: 600;">Bienvenue à l'accueil !</p>
+    <a href="{{ url_for('scan') }}" class="btn btn-primary">📸 SCANNER UN INVITÉ</a>
+</div>
+
+<div class="glass-card">
+    <h2 style="font-size: 1.2rem; margin-bottom: 15px; border-bottom: 2px solid var(--secondary-color); padding-bottom: 5px;">
+        LISTE DES INVITÉS
+    </h2>
+    <div class="guest-list">
+        {% for guest in guests %}
+            <div class="guest-item">
+                <div class="guest-info">
+                    <h3 style="{% if guest.a_paye %}text-decoration: line-through; opacity: 0.5;{% endif %}">{{ guest.nom }}</h3>
+                    <p>{{ guest.montant_attendu }} {{ guest.devise }}</p>
+                </div>
+                <div class="guest-status">
+                    {% if guest.a_paye %}
+                        <span class="checkmark">✔ Validé</span>
+                    {% elif guest.essais_echoues >= 2 %}
+                        <span class="status-badge status-locked">🚫 Bloqué</span>
+                    {% else %}
+                        <span class="status-badge status-pending">En attente</span>
+                    {% endif %}
+                </div>
+            </div>
+        {% else %}
+            <p style="text-align: center; opacity: 0.5;">Aucun invité enregistré.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

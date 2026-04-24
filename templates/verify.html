@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Vérification</h1>
+
+<div class="glass-card">
+    {% if success %}
+    <div class="alert alert-success giant-alert">
+        BIENVENUE {{ guest.nom }} ! ✅<br>
+        <small>Contribution validée</small>
+    </div>
+    <a href="{{ url_for('scan') }}" class="btn btn-primary">Flasher le suivant</a>
+    {% elif error %}
+    <div class="alert alert-error giant-alert">
+        {{ error }}
+    </div>
+
+    {% if not locked %}
+    <h3>Deuxième chance :</h3>
+    <form method="POST">
+        <div class="form-group">
+            <label>Corrigez votre nom</label>
+            <input type="text" name="nom" required placeholder="Votre nom complet"
+                value="{{ request.form.get('nom', '') }}">
+        </div>
+        <div class="form-group">
+            <label>Corrigez le montant</label>
+            <input type="number" name="montant" required placeholder="Le montant exact">
+        </div>
+        <button type="submit" class="btn btn-primary">Réessayer</button>
+    </form>
+    {% else %}
+    <p style="text-align: center; color: var(--error-color); font-weight: bold; margin-top: 20px;">
+        Vérification terminée. Contactez Pakas.
+    </p>
+    <a href="{{ url_for('scan') }}" class="btn btn-primary" style="margin-top: 20px;">Retour au scanner</a>
+    {% endif %}
+    {% else %}
+    <div style="text-align: center; margin-bottom: 20px;">
+        <p>Veuillez entrer les informations pour confirmer l'accès.</p>
+    </div>
+    <form method="POST">
+        <div class="form-group">
+            <label>Nom complet</label>
+            <input type="text" name="nom" required placeholder="Entrez le nom">
+        </div>
+        <div class="form-group">
+            <label>Montant en {{ guest.devise }}</label>
+            <input type="number" name="montant" required placeholder="Ex: {{ guest.montant_attendu }}">
+        </div>
+        <button type="submit" class="btn btn-primary">Vérifier l'entrée</button>
+    </form>
+    {% endif %}
+</div>
+{% endblock %}

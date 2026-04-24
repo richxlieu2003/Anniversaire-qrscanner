@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Accès Admin</h1>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages %}
+<div class="alert alert-error">{{ message }}</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+<div class="glass-card">
+  <form method="POST">
+    <div class="form-group">
+      <label>Mot de passe</label>
+      <input type="password" name="password" required placeholder="Entrez le code secret"
+        style="width: 100%; padding: 12px; border-radius: 12px; border: 1.5px solid #eee; background: var(--accent-pale);">
+    </div>
+    <button type="submit" class="btn btn-primary">SE CONNECTER</button>
+  </form>
+</div>
+{% endblock %}

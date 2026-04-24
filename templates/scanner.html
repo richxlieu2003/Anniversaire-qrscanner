@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Flasher un invité</h1>
+
+<div class="glass-card">
+    <div id="reader"></div>
+    <div id="result" style="text-align: center; margin-top: 20px; font-weight: bold; color: var(--success-color);"></div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<!-- HTML5 QR Code Scanner Library -->
+<script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+<script>
+    function onScanSuccess(decodedText, decodedResult) {
+        // Rediriger vers l'URL scannée, ou si c'est seulement un code, rediriger vers /verify/code
+        if(decodedText.includes('verify/')) {
+            window.location.href = decodedText;
+        } else {
+            document.getElementById('result').innerText = "Code QR invalide ou non reconnu : " + decodedText;
+        }
+    }
+
+    function onScanFailure(error) {
+        // Les échecs de lecture continus (ignorés)
+    }
+
+    let html5QrcodeScanner = new Html5QrcodeScanner(
+        "reader",
+        { fps: 10, qrbox: {width: 250, height: 250} },
+        /* verbose= */ false);
+        
+    html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+</script>
+{% endblock %}

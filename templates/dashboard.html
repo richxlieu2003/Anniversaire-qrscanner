@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Gestion Invités</h1>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="alert alert-{{ category }}">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+<div class="glass-card">
+    <h2 style="font-size: 1.1rem; margin-bottom: 15px;">Nouvel Invité</h2>
+    <form method="POST" action="{{ url_for('admin') }}">
+        <div class="form-group">
+            <label>Nom</label>
+            <input type="text" name="nom" required placeholder="Ex: Pakas">
+        </div>
+        <div class="form-group" style="display: flex; gap: 10px;">
+            <div style="flex: 2;">
+                <label>Montant</label>
+                <input type="number" name="montant" required placeholder="0">
+            </div>
+            <div style="flex: 1;">
+                <label>Devise</label>
+                <select name="devise">
+                    <option value="USD">USD ($)</option>
+                    <option value="CDF">CDF (FC)</option>
+                </select>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">ENREGISTRER</button>
+    </form>
+</div>
+
+<div class="glass-card">
+    <h2 style="font-size: 1.1rem; margin-bottom: 15px;">Actions rapides</h2>
+    <div class="guest-list">
+        {% for guest in guests %}
+            <div class="guest-item">
+                <div class="guest-info">
+                    <h3>{{ guest.nom }}</h3>
+                    <p>{{ guest.montant_attendu }} {{ guest.devise }}</p>
+                </div>
+                <div class="actions" style="display: flex; gap: 10px;">
+                    <a href="{{ url_for('generate_qr', code_unique=guest.code_unique) }}" target="_blank" style="font-size: 1.2rem;">🖼️</a>
+                    <form action="{{ url_for('delete_guest', guest_id=guest.id) }}" method="POST">
+                        <button type="submit" style="background:none; border:none; color:var(--error-color); cursor:pointer;">🗑️</button>
+                    </form>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

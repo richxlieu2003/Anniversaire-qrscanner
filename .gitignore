@@ -1,0 +1,6 @@
+Richy/
+__pycache__/
+*.db
+.DS_Store
+instance/
+.env

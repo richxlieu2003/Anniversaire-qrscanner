@@ -1,0 +1,239 @@
+:root {
+  --primary-color: #c5a059;
+  /* Gold shadow */
+  --secondary-color: #f5f5dc;
+  /* Beige */
+  --bg-color: #fcfaf2;
+  /* Light Champagne */
+  --surface-color: #ffffff;
+  --text-color: #4b4432;
+  --success-color: #63a375;
+  --error-color: #e56b6f;
+  --accent-pale: #fffde7;
+  /* Pale Yellow highlight */
+  --border-radius: 20px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  background: var(--bg-color);
+  color: var(--text-color);
+  min-height: 100vh;
+  padding-bottom: 80px;
+  /* Space for nav */
+}
+
+.container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  color: var(--primary-color);
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.glass-card {
+  background: var(--surface-color);
+  border-radius: var(--border-radius);
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 10px 25px rgba(197, 160, 89, 0.1);
+  border: 1px solid rgba(197, 160, 89, 0.1);
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1.5px solid #eee;
+  font-size: 1rem;
+  background: var(--accent-pale);
+  color: var(--text-color);
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.btn {
+  width: 100%;
+  padding: 15px;
+  border-radius: 12px;
+  border: none;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s;
+  text-decoration: none;
+  display: block;
+  text-align: center;
+}
+
+.btn-primary {
+  background: rgba(197, 160, 89, 0.82);
+  color: white;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.4),
+    0 8px 20px rgba(197, 160, 89, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(rgba(255, 255, 255, 0.15), transparent);
+  pointer-events: none;
+}
+
+.btn-primary:hover {
+  background: rgba(197, 160, 89, 0.95);
+  transform: translateY(-2px) scale(1.01);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.5),
+    0 12px 25px rgba(197, 160, 89, 0.3);
+}
+
+.btn-primary:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Guest List on Home */
+.guest-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1.5px solid #f0f0f0;
+}
+
+.guest-item:last-child {
+  border-bottom: none;
+}
+
+.guest-info h3 {
+  font-size: 1rem;
+  margin-bottom: 2px;
+}
+
+.guest-info p {
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+/* Checkmark Style */
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+.status-success {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.status-pending {
+  background: #fffde7;
+  color: #fbc02d;
+}
+
+.status-locked {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.checkmark {
+  color: var(--success-color);
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+/* Bottom Nav */
+.floating-nav {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  background: white;
+  padding: 8px 15px;
+  border-radius: 40px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 400px;
+  justify-content: space-around;
+  z-index: 1000;
+}
+
+.floating-nav a {
+  text-decoration: none;
+  color: #888;
+  font-size: 0.8rem;
+  padding: 10px;
+  border-radius: 30px;
+}
+
+.floating-nav a.active {
+  color: var(--primary-color);
+  font-weight: bold;
+}
+
+.alert {
+  padding: 12px;
+  border-radius: 10px;
+  text-align: center;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.alert-error {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.alert-success {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+#reader {
+  border-radius: 20px;
+  overflow: hidden;
+}
